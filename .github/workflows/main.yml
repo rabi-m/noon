@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for Noon
+name: CI/CD Pipeline for Noon App
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Run Tests (يمكنك إضافة اختبارات إذا وجدت)
+      # Run Tests (اختياري - إذا أضفت اختبارات)
       - name: Run Tests
         run: |
           echo "Tests passed!"
@@ -51,16 +51,5 @@ jobs:
       # Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
-          docker build -t capital861/noon-app .
-          docker push capital861/noon-app
-
-  deploy:
-    needs: docker-build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Kubernetes
-        uses: azure/k8s-deploy@v4
-        with:
-          namespace: default
-          manifests: |
-            deployment.yaml
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/noon-app .
+          docker push ${{ secrets.DOCKER_USERNAME }}/noon-app
