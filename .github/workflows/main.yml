@@ -51,5 +51,5 @@ jobs:
       # Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/noon-app .
-          docker push ${{ secrets.DOCKER_USERNAME }}/noon-app
+          docker build -t capital861/noon-app .
+          docker push capital861/noon-app
