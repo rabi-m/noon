@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: noon-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: noon-app
+  template:
+    metadata:
+      labels:
+        app: noon-app
+    spec:
+      containers:
+      - name: noon-app
+        image: your-dockerhub-username/noon-app
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: noon-app-service
+spec:
+  selector:
+    app: noon-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer
